@@ -14,6 +14,12 @@
     
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @livewireStyles
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
     <div id="app">
@@ -26,26 +32,38 @@
                 </div>
                 <nav class="space-x-4 text-gray-300 text-sm sm:text-base">
                     @guest
-                        <a class="no-underline hover:underline" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        <a class="no-underline hover:underline" href="{{ route('authenticate') }}">{{ __('Login') }}</a>
                         @if (Route::has('register'))
-                            <a class="no-underline hover:underline" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        {{-- <a class="no-underline hover:underline" href="{{ route('authenticate') }}">{{ __('Register') }}</a> --}}
                         @endif
-                    @else
+                        @else
+                       
+                    @endguest
+                    @auth   
                         <span>{{ Auth::user()->name }}</span>
-
-                        <a href="{{ route('logout') }}"
-                           class="no-underline hover:underline"
-                           onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                        
+                        <a class="no-underline hover:underline" href="{{ route('course.index') }}">{{
+                            __('Course') }}</a>
+                        <a class="no-underline hover:underline" href="{{ route('student.index') }}">{{
+                            __('Student') }}</a>
+                        <a class="no-underline hover:underline" href="{{ route('teacher.index') }}">{{
+                            __('Teacher') }}</a>
+                        <a class="no-underline hover:underline" href="{{ route('course.schedule') }}">{{
+                            __('Course Schedule') }}</a>
+                        <a href="{{ route('logout') }}" class="no-underline hover:underline"
+                            onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            class="hidden">
                             {{ csrf_field() }}
                         </form>
-                    @endguest
+                    @endauth
                 </nav>
             </div>
         </header>
 
         @yield('content')
+        @livewireScripts
     </div>
 </body>
 </html>
