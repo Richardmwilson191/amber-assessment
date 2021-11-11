@@ -75,7 +75,7 @@
                                 </td>
                                 <td
                                     class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 ">
-                                    {{ $course->teacher->user->name }}
+                                    {{ $course->teacher?->user->name }}
                                 </td>
                                 <td>
                                     <div class="flex">

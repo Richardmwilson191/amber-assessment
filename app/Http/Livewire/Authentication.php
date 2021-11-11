@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -59,11 +60,15 @@ class Authentication extends Component
         ]);
 
         $this->password = Hash::make($this->password);
-        User::create([
+        $user = User::create([
             'role' => 'student',
             'name' => $this->name,
             'email' => $this->email,
             'password' => $this->password
+        ]);
+
+        Student::create([
+            'user_id' => $user->id
         ]);
 
         session()->flash('message', 'Your register successfully Go to the login page.');

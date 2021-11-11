@@ -17,7 +17,6 @@
                 </div>
 
                 <div class="flex">
-                   
                     @forelse ($student->teacherStudent as $teacherStudent)
                     
                     @forelse ($teacherStudent->teacher->courses as $course)

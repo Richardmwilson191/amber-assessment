@@ -42,19 +42,19 @@
                     @auth   
                         <span class="bg-gray-300 rounded text-indigo-700">{{ Auth::user()->name }}</span>
                         @if (auth()->user()->role === 'teacher')
-                            <a class="no-underline hover:underline" href="{{ route('teacher.schedule') }}">{{
+                            <a class="no-underline hover:underline" href="{{ route('home') }}">{{
                                 __('Home') }}</a>
                         @endif
                         
                         @if (auth()->user()->role === 'admin')
                             <a class="no-underline hover:underline" href="{{ route('course.index') }}">{{
-                                __('Course') }}</a>
+                                __('Courses') }}</a>
                             <a class="no-underline hover:underline" href="{{ route('student.index') }}">{{
-                                __('Student') }}</a>
+                                __('Students') }}</a>
                             <a class="no-underline hover:underline" href="{{ route('teacher.index') }}">{{
-                                __('Teacher') }}</a>
+                                __('Teachers') }}</a>
                             <a class="no-underline hover:underline" href="{{ route('course.schedule') }}">{{
-                                __('Course Schedule') }}</a>
+                                __('Course Schedules') }}</a>
                         @endif
                         <a href="{{ route('logout') }}" class="no-underline hover:underline"
                             onclick="event.preventDefault();
