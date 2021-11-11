@@ -13,15 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/authenticate', function () {
+Route::middleware('guest')->get('/authenticate', function () {
     return view('index');
 })->name('authenticate');
 Auth::routes();
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('admin')->middleware('auth', 'check.role')->group(function () {
-    Route::get('/', function () {
+Route::middleware('auth', 'check.role')->group(function () {
+    Route::get('/course', function () {
         return view('course');
     })->name('course.index');
 
@@ -36,8 +35,10 @@ Route::prefix('admin')->middleware('auth', 'check.role')->group(function () {
     Route::get('/course/schedule', function () {
         return view('course-schedule');
     })->name('course.schedule');
+
+    Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 
-Route::middleware('check.role')->get('/teacher/schedule', function () {
-    return view('home');
-})->name('teacher.schedule');
+// Route::middleware('check.role')->get('/teacher/schedule', function () {
+//     return view('home');
+// })->name('teacher.schedule');

@@ -3,15 +3,18 @@
 namespace App\Http\Livewire;
 
 use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\TeacherStudent;
 use App\Models\User;
 use Livewire\Component;
 
 class StudentLive extends Component
 {
-    public $role, $email, $password, $name, $studentUserId;
+    public $role, $email, $password, $name, $studentUserId, $teachers, $studentId, $teacherId;
     public $viewStudents = true;
     public $showAddStudent = false;
     public $showEditStudent = false;
+    public $showAssignTeacher = false;
 
     public function createStudent()
     {
@@ -51,6 +54,29 @@ class StudentLive extends Component
             'name' => $this->name,
             'email' => $this->email
         ]);
+        $this->reset();
+    }
+
+    public function assignTeacher($studentId)
+    {
+        $this->teachers = Teacher::all();
+        $this->viewStudents = false;
+        $this->showAssignTeacher = true;
+        $this->studentId = $studentId;
+        $this->name = Student::find($studentId)->user->name;
+    }
+
+    public function assignSave($studentId)
+    {
+        $this->validate([
+            'teacherId' => 'required',
+        ]);
+
+        TeacherStudent::create([
+            'student_id' => $studentId,
+            'teacher_id' => $this->teacherId,
+        ]);
+
         $this->reset();
     }
 

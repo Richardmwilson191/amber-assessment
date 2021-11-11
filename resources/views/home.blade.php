@@ -10,18 +10,17 @@
             </div>
         @endif
 
-        <section class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg">
+        @if (auth()->user()->role === 'teacher')
+            <livewire:teacher-home />    
+        @endif
+        
+        @if (auth()->user()->role === 'student')
+            <livewire:student-home />    
+        @endif
 
-            <header class="font-semibold bg-gray-200 text-gray-700 py-5 px-6 sm:py-6 sm:px-8 sm:rounded-t-md">
-                Dashboard
-            </header>
-
-            <div class="w-full p-6">
-                <p class="text-gray-700">
-                    You are logged in!
-                </p>
-            </div>
-        </section>
+        @if (auth()->user()->role === 'admin')
+            <div class="text-2xl text-center">Welcome Admin User, <span class="text-indigo-500">{{ auth()->user()->name }}</span></div>   
+        @endif   
     </div>
 </main>
 @endsection

@@ -1,9 +1,6 @@
 <div>
     @if($viewSchedule)
     <section>
-        {{-- <div class="py-12">
-            <h1 class="bold text-3xl text-gray-800 w-4/6 m-auto">Student</h1>
-        </div> --}}
         <div class="w-full mb-12 xl:mb-0 px-4 mx-auto mt-12">
             <div
                 class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded ">
@@ -12,7 +9,7 @@
                         <div
                             class="relative w-full px-4 max-w-full flex-grow flex-1">
                             <h3 class="font-semibold text-base text-indigo-700">
-                                Schedule Schedule</h3>
+                                Course Schedule</h3>
                         </div>
                         <div class="flex items-center justify-center relative">
                             <input wire:model.debounce.500ms="searchVal"
@@ -34,7 +31,7 @@
                             class="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
                             <a wire:click.prevent="createSchedule"
                                 class="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-2 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                type="button">Add Schedule Schedule</a>
+                                type="button">Add Course Schedule</a>
                         </div>
                     </div>
                 </div>
@@ -61,7 +58,7 @@
                                     End Time
                                 </th>
                                 <th
-                                    class="px-4 bg-indigo-50 text-indigo-500 align-middle border border-solid border-indigo-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    class="px-4 bg-indigo-50 text-indigo-500 align-middle border border-solid border-indigo-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
                                     Options
                                 </th>
                             </tr>
@@ -87,16 +84,8 @@
                                     {{ $schedule->end_time }}
                                 </td>
                               
-                                <td>
+                                <td class="pr-4">
                                     <div class="flex">
-                                        {{-- <a
-                                            href="{{ route('subjectchoice.create', $student->id) }}"
-                                            class="px-2 text-sm py-2 mx-auto font-medium text-indigo-600 transition duration-500 ease-in-out transform bg-indigo-100 rounded-lg hover:bg-indigo-300 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
-                                            <i class="fas fa-plus"></i>
-                                            <i class="fas fa-book"></i></a> --}}
-                                        {{-- <a wire:click="assignTeacher({{ $schedule->id }})"
-                                            class="px-2 text-sm py-2 mx-auto font-medium text-green-600 transition duration-500 ease-in-out transform bg-green-100 rounded-lg hover:bg-green-300 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
-                                            Assign Teacher</a> --}}
                                         <a wire:click="editSchedule({{ $schedule->id }})"
                                             class="px-2 text-sm py-2 mx-auto font-medium text-blue-600 transition duration-500 ease-in-out transform bg-blue-100 rounded-lg hover:bg-blue-300 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
                                             <i class="fas fa-edit"></i></a>
@@ -122,14 +111,14 @@
     <section class="w-4/5 m-auto mt-12">
         <div class="flex -full justify-center">
             <h3 class="font-semibold text-xl text-indigo-700">
-                Add Schedules</h3>
+                Add Schedule</h3>
         </div>
         <div class="px-12 py-16  shadow-lg bg-white lg:w-2/5 m-auto">
             <form wire:submit.prevent="storeSchedule">
                 <div class="w-full mt-8 b-4">
                     <label for="">Course</label>
                     <select wire:model="courseId"
-                        class="w-full px-4 py-1 rounded-md  outline-gray-400 text-gray-800 bg-gray-50"
+                        class="px-2  w-full border rounded py-2 text-gray-700 focus:outline-none items-center"
                         name="" id="">
                         <option value="">Select Course</option>
                         @foreach ($courses as $course)
@@ -142,9 +131,17 @@
                 <div class="w-full mb-4">
                     <div class="flex flex-col justify-center">
                         <label for="">Day</label>
-                        <input wire:model.defer="day" type='text'
-                            placeholder="Enter day..."
-                            class="px-2  w-full border rounded py-2 text-gray-700 focus:outline-none items-center" />
+                        <select wire:model.defer="day"
+                            class="px-2  w-full border rounded py-2 text-gray-700 focus:outline-none items-center">
+                            <option value="">Select Day</option>
+                            <option value="Sunday">Sunday</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                        </select>
                         @error('day')
                         <div class="text-red-500 text-sm">{{ $message }}</div>
                         @enderror
@@ -153,7 +150,7 @@
                 <div class="w-full mb-4">
                     <div class="flex flex-col justify-center">
                         <label for="">Start Time</label>
-                        <input wire:model.defer="startTime" type='text'
+                        <input wire:model.defer="startTime" type='time'
                             placeholder="Enter start time..."
                             class="px-2  w-full border rounded py-2 text-gray-700 focus:outline-none items-center" />
                         @error('start_time')
@@ -164,7 +161,7 @@
                 <div class="w-full mb-4">
                     <div class="flex flex-col justify-center">
                         <label for="">End Time</label>
-                        <input wire:model.defer="endTime" type='text'
+                        <input wire:model.defer="endTime" type='time'
                             placeholder="Enter end time..."
                             class="px-2  w-full border rounded py-2 text-gray-700 focus:outline-none items-center" />
                         @error('endTime')
@@ -191,7 +188,7 @@
                 <div class="w-full mt-8 b-4">
                     <label for="">Course</label>
                     <select wire:model="courseId"
-                        class="w-full px-4 py-1 rounded-md  outline-gray-400 text-gray-800 bg-gray-50"
+                        class="px-2  w-full border rounded py-2 text-gray-700 focus:outline-none items-center"
                         name="" id="">
                         <option value="">Select Course</option>
                         @foreach ($courses as $course)
@@ -246,47 +243,4 @@
         </div>
     </section>
     @endif
-
-    {{-- @if($showAssignTeacher)
-    <section class="w-4/5 m-auto mt-12">
-        <div class="flex -full justify-center">
-            <h3 class="font-semibold text-xl text-indigo-700">
-                Assign Teacher</h3>
-        </div>
-        <div class="px-12 py-16  shadow-lg bg-white lg:w-2/5 m-auto">
-            <form wire:submit.prevent="assign({{ $schedule->id }})">
-                <div class="w-full mb-4">
-                    <div class="flex flex-col justify-center">
-                        <span class="text-lg text-center">
-                            {{ $schedule->schedule_nm }}
-                        </span>
-                    </div>
-                </div>
-                <div class="w-full mb-2">
-                    <div class="flex flex-col justify-center">
-                        <div class="w-full mt-8 b-4">
-                            <label for="">Teacher</label>
-                            <select wire:model="teacherId"
-                                class="w-full px-4 py-1 rounded-md  outline-gray-400 text-gray-800 bg-gray-50"
-                                name="" id="">
-                                <option value="">Select Teacher</option>
-                                @foreach ($teachers as $teacher)
-                                <option value="{{ $teacher->id }}">{{
-                                    $teacher->user->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        @error('schedule.cost')
-                        <div class="text-red-500 text-sm">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-                <button type="submit"
-                    class="w-full mt-6 py-2 rounded bg-blue-500 text-gray-100 focus:outline-none">
-                    Submit</button>
-            </form>
-        </div>
-    </section>
-    @endif --}}
 </div>

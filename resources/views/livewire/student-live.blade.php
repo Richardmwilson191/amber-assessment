@@ -53,7 +53,7 @@
                                     Email
                                 </th>
                                 <th
-                                    class="px-4 bg-indigo-50 text-indigo-500 align-middle border border-solid border-indigo-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                                    class="px-4 bg-indigo-50 text-indigo-500 align-middle border border-solid border-indigo-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center">
                                     Options
                                 </th>
                             </tr>
@@ -70,17 +70,11 @@
                                     class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-md whitespace-nowrap p-4 ">
                                     {{ $student->user->email }}
                                 </td>
-                                <td>
+                                <td class="pr-4">
                                     <div class="flex">
-                                        {{-- <a
-                                            href="{{ route('subjectchoice.create', $student->id) }}"
-                                            class="px-2 text-sm py-2 mx-auto font-medium text-indigo-600 transition duration-500 ease-in-out transform bg-indigo-100 rounded-lg hover:bg-indigo-300 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
-                                            <i class="fas fa-plus"></i>
-                                            <i class="fas fa-book"></i></a> --}}
-                                        {{-- <a
-                                            href="{{ route('student.show', $student->id) }}"
+                                        <a wire:click.prevent="assignTeacher({{ $student->id }})"
                                             class="px-2 text-sm py-2 mx-auto font-medium text-green-600 transition duration-500 ease-in-out transform bg-green-100 rounded-lg hover:bg-green-300 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
-                                            <i class="fas fa-eye"></i></a> --}}
+                                            Assign Teacher</a>
                                         <a wire:click="editStudent({{ $student->id }})"
                                             class="px-2 text-sm py-2 mx-auto font-medium text-blue-600 transition duration-500 ease-in-out transform bg-blue-100 rounded-lg hover:bg-blue-300 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
                                             <i class="fas fa-edit"></i></a>
@@ -207,6 +201,49 @@
                 <button type="submit"
                     class="w-full mt-6 py-2 rounded bg-blue-500 text-gray-100 focus:outline-none">
                     Update</button>
+            </form>
+        </div>
+    </section>
+    @endif
+
+    @if($showAssignTeacher)
+    <section class="w-4/5 m-auto mt-12">
+        <div class="flex -full justify-center">
+            <h3 class="font-semibold text-xl text-indigo-700">
+                Assign Teacher</h3>
+        </div>
+        <div class="px-12 py-16  shadow-lg bg-white lg:w-2/5 m-auto">
+            <form wire:submit.prevent="assignSave({{ $studentId }})">
+                <div class="w-full mb-4">
+                    <div class="flex flex-col justify-center">
+                        <span class="text-lg text-center">
+                            {{ $name }}
+                        </span>
+                    </div>
+                </div>
+                <div class="w-full mb-2">
+                    <div class="flex flex-col justify-center">
+                        <div class="w-full mt-8 b-4">
+                            <label for="">Teacher</label>
+                            <select wire:model="teacherId"
+                                class="w-full px-4 py-1 rounded-md  outline-gray-400 text-gray-800 bg-gray-50"
+                                name="" id="">
+                                <option value="">Select Teacher</option>
+                                @foreach ($teachers as $teacher)
+                                <option value="{{ $teacher->id }}">{{
+                                    $teacher->user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+    
+                        @error('teacherId')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <button type="submit"
+                    class="w-full mt-6 py-2 rounded bg-blue-500 text-gray-100 focus:outline-none">
+                    Assign</button>
             </form>
         </div>
     </section>

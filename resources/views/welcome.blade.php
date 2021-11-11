@@ -68,6 +68,6 @@
 </html> --}}
 
 @extends('layouts.app')
-@section('teacher')
+@section('content')
     <livewire:teacher-home>
 @endsection

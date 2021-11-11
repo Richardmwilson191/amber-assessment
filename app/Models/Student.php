@@ -20,8 +20,8 @@ class Student extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function studentTeacher()
+    public function teacherStudent()
     {
-        return $this->belongsTo(StudentTeacher::class);
+        return $this->hasMany(TeacherStudent::class);
     }
 }
